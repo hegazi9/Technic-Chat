@@ -1,21 +1,17 @@
-import {
-  GET_TODO_ATTEMPING,
-  GET_TODO_FAILED,
-  GET_TODO_SUCCESS,
-} from '../actions/Types';
+import {GET_TODO_ATTEMPING, GET_TODO_FAILED, GET_TODO_SUCCESS} from '../types';
 
-const INITIAL_STATE = { tasks: null };
+const INITIAL_STATE = {tasks: null};
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_TODO_ATTEMPING:
-      return { ...INITIAL_STATE };
+      return {...INITIAL_STATE};
 
     case GET_TODO_SUCCESS:
-      return { tasks: action.payload };
+      return {tasks: action.payload};
 
     case GET_TODO_FAILED:
-      return { tasks: action.payload };
+      return {tasks: action.payload};
 
     default:
       return state;

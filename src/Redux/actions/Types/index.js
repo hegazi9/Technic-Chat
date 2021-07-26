@@ -1,5 +1,0 @@
-
-export const GET_TODO_ATTEMPING = "GET_TODO_ATTEMPING";
-export const GET_TODO_FAILED = "GET_TODO_FAILED";
-export const GET_TODO_SUCCESS = "GET_TODO_SUCCESS";
-
