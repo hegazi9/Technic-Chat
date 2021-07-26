@@ -1,33 +1,34 @@
 {
   "project_info": {
-    "project_number": "348796506613",
-    "project_id": "mychatapp-c0a29",
-    "storage_bucket": "mychatapp-c0a29.appspot.com"
+    "project_number": "1057149679397",
+    "firebase_url": "https://technic-7301d-default-rtdb.firebaseio.com",
+    "project_id": "technic-7301d",
+    "storage_bucket": "technic-7301d.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:348796506613:android:1e058f69074df3debad0bc",
+        "mobilesdk_app_id": "1:1057149679397:android:6651c966671ad95cff8ccc",
         "android_client_info": {
           "package_name": "com.mychatapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "348796506613-fm8a64blmm4vrbtdddrcghin3el8ecms.apps.googleusercontent.com",
+          "client_id": "1057149679397-3e0oe6fl6hq6s71na1g5evidstdfku81.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCUoGXa5QaRXP2Fw6_j23xnLxQuulGBWLE"
+          "current_key": "AIzaSyAJJQRT48rvPUBSONRZkE4p5T1lyEduJn0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "348796506613-fm8a64blmm4vrbtdddrcghin3el8ecms.apps.googleusercontent.com",
+              "client_id": "1057149679397-3e0oe6fl6hq6s71na1g5evidstdfku81.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

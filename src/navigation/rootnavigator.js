@@ -6,6 +6,7 @@ import Splash from '../screens/Splash';
 import Chat from '../screens/chat/chat';
 import Login from '../screens/login';
 import Users from '../screens/home/home';
+import Siginup from '../screens/register/siginup';
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,12 @@ export default RootNavigator = () => {
           component={Splash}
           options={{headerShown: false}}
         />
+         <Stack.Screen
+          name="Siginup"
+          component={Siginup}
+          options={{headerShown: false}}
+        />
+
         <Stack.Screen
           name="Login"
           component={Login}

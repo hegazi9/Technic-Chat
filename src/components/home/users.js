@@ -29,53 +29,64 @@ const usersImages = [
   require('../../assets/images/user1.jpg'),
 ];
 
-const Users = ({route, navigation}) => {
-  const userInfo = route.params.userInfo;
+const Users = ({route, navigation,UserInfo }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
     getUsers();
+    // getMessgaes();
   }, []);
 
   useEffect(() => {
     console.log('updateeeed...', users);
   }, [users]);
 
-  const getUsers = () => {
+  const getUsers = async () => {
     let dbRef = database().ref('users');
     dbRef.on('child_added', async val => {
       let user = val.val();
       console.log('user:', user);
-      let index = users.findIndex(i => i.id === user.id);
-      index == -1 ? setUsers(users => [...users, user]) : null;
+      setUsers(users => [...users, user])
     });
 
     dbRef.on('child_changed', async val => {
       let user = await val.val();
-      console.log('users changed :', user);
-      console.log('hegaziiiiiiiiiiiiiiiiiiiiiiiiiiiiiii:', users);
     });
   };
 
+  // const getMessgaes = async () => {
+  //   let dbRef = database().ref('message');
+  //   dbRef.on('child_added', async val => {
+  //     let message = val.val();
+  //     console.log('messgae:', message);
+  //   });
+  // };
+
+
   const userItem = ({item, index}) => {
     return (
+      UserInfo.id != item.id ?
+
       <TouchableOpacity
         style={styles.userView}
         onPress={() => {
-          navigation.navigate('Chat');
+          navigation.navigate('Chat', {
+            selectedUser : item
+          });
         }}>
         <Image
           source={usersImages[index % usersImages.length]}
           style={styles.img}
         />
         <View>
-          <Text style={styles.username}>{'hegazi9 & sa3d0on'}</Text>
+          <Text style={styles.username}>{item.firstName +" "+ item.lastName}</Text>
           <Text numberOfLines={1} style={styles.message}>
-            {'Hey I am using chating app'}
+            {item.id}
           </Text>
         </View>
         <Text style={styles.date}>{'20:00'}</Text>
       </TouchableOpacity>
+    : null 
     );
   };
 
@@ -87,7 +98,8 @@ const Users = ({route, navigation}) => {
         <FlatList
           style={{marginBottom: 30}}
           showsVerticalScrollIndicator={false}
-          data={[1, 1, 1, 1, 1, 1, 1, , 1, 1, 1, 1, 1, 1]}
+          data={users}
+          extraData={users}
           renderItem={userItem}
           keyExtractor={_keyExtractor}
         />

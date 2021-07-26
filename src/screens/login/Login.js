@@ -40,7 +40,7 @@ const Login = ({navigation, toast}) => {
         ? users.map(item => {
             if (item.username == username && item.password == password) {
               AsyncStorage.setItem('user', JSON.stringify(item));
-              navigation.replace('Users', {userInfo: item});
+              navigation.replace('Users', {users: users });
               return true;
             } else {
               toast.current.show('Username or Password incorrect', 3000);

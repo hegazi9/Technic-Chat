@@ -11,11 +11,67 @@ import {
 import {Icon} from 'native-base';
 import {TextInput} from 'react-native';
 import styles from './style';
+import AsyncStorage from '@react-native-community/async-storage';
+import database from '@react-native-firebase/database';
+var Rooms = [];
 
-const Chat = ({}) => {
+const Chat = ({route}) => {
   const [loading, setLoading] = useState(false);
+  const selectedUser = route.params.selectedUser ;
+  const [message , setMessage ] = useState('');
+  const [userLoged , setuserLoged] = useState('');
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    AsyncStorage.getItem('user').then(_ =>{
+      setuserLoged( JSON.parse(_));
+    })
+   
+  }, []);
+
+ const sendMsg = (message) => {
+   database().ref().once('value', function(snapshot) {
+    if (snapshot.val() !== null) {
+        Rooms = Object.keys (snapshot.val().message);
+    }
+  });
+
+    if(Rooms.length == 0 )
+    {
+      console.log( 'Room Empty');
+      database().ref('message/').child(userLoged.id+selectedUser.id)
+      .push({ 
+        sender :userLoged , senderID :userLoged.id  , 
+        receiverID : selectedUser.id , receiver  : selectedUser , message : message ,
+        messageDate :  new Date()})
+    }
+
+    else {
+
+    Rooms.map( item => {
+      if((userLoged.id+selectedUser.id) == item || (selectedUser.id+userLoged.id) == item )
+      {
+        console.log( 'Room cpmplete');
+        database().ref('message/').child(item)
+        .push({ 
+          sender :userLoged , senderID :userLoged.id  , 
+          receiverID : selectedUser.id , receiver  : selectedUser , message : message ,
+          messageDate :  new Date()})
+          return true ;
+      }
+      else {
+        console.log( 'Another Room ');
+        database().ref('message/').child(userLoged.id+selectedUser.id)
+        .push({ 
+          sender :userLoged , senderID :userLoged.id  , 
+          receiverID : selectedUser.id , receiver  : selectedUser , message : message ,
+          messageDate :  new Date()})
+          return true ;
+
+      }
+    })
+  }
+    
+  }
 
   const taskItem = ({item}) => {
     return <Text>{item}</Text>;
@@ -36,7 +92,7 @@ const Chat = ({}) => {
         </View>
 
         <View style={styles.callingView}>
-          <Text style={styles.myName}>{'Mohamed\nKamal Hegazi'}</Text>
+          <Text style={styles.myName}>{selectedUser.firstName +"\n"+ selectedUser.lastName}</Text>
           <View style={styles.rowIcons}>
             <TouchableOpacity style={styles.backgroundIconPhone}>
               <Icon name="phone" type="FontAwesome" style={styles.icon} />
@@ -67,9 +123,13 @@ const Chat = ({}) => {
           <TextInput
             multiline
             style={styles.input}
+            onChangeText={setMessage}
             placeholder={'Type your message.'}
+            onSubmitEditing={ ()=> sendMsg(message)}
           />
-          <TouchableOpacity style={styles.backgroundIconSend}>
+          <TouchableOpacity style={styles.backgroundIconSend} onPress={()=>{
+            sendMsg(message)
+          }}>
             <Icon name="send" type="Ionicons" style={styles.icon} />
           </TouchableOpacity>
         </View>
