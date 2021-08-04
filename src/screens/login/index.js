@@ -6,6 +6,7 @@ import Login from './Login';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-easy-toast';
 import Colors from '../../utils/colors';
+import  {LOGIN , SIGNUP }  from '../../utils/constance'
 
 const index = ({navigation}) => {
   const [login, isLogin] = useState(true);
@@ -16,8 +17,12 @@ const index = ({navigation}) => {
       showsVerticalScrollIndicator={false}
       nestedScrollEnabled>
       <View style={styles.container}>
-        <Text style={styles.TextHeader}>{'Login'}</Text>
-        <Login navigation={navigation} toast={toast} />
+        <View style={styles.row}>
+          <Text style={styles.TextHeader}>{LOGIN}</Text>
+          <Text  onPress={()=> navigation.navigate('Siginup')} style={styles.TextGreyHeader}>{SIGNUP}</Text>
+        </View>
+        {login ? <Login navigation={navigation} toast={toast} /> : 
+        <SignUp navigation={navigation} toast={toast} isLogin={isLogin} />}
       </View>
 
       <Toast

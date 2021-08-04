@@ -7,6 +7,7 @@ import Chat from '../screens/chat/chat';
 import Login from '../screens/login';
 import Users from '../screens/home/home';
 import Siginup from '../screens/register/siginup';
+import Agora from '../screens/chat/agora';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,11 @@ export default RootNavigator = () => {
          <Stack.Screen
           name="Siginup"
           component={Siginup}
+          options={{headerShown: false}}
+        />
+   <Stack.Screen
+          name="Agora"
+          component={Agora}
           options={{headerShown: false}}
         />
 

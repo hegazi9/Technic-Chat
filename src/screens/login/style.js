@@ -24,7 +24,9 @@ const styles = StyleSheet.create({
   TextGreyHeader: {
     color: Colors.grey,
     fontWeight: 'bold',
-    fontSize: wp('5'),
+    fontSize: wp('6'),
+    marginLeft : 'auto',
+
   },
   lightText: {
     color: Colors.grey,
@@ -113,6 +115,10 @@ const styles = StyleSheet.create({
     fontSize: 22,
     marginLeft: 10,
   },
+  icon : 
+  {
+    color: Colors.blue, fontSize: 20
+  }
 });
 
 export default styles;

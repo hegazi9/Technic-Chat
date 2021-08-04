@@ -77,7 +77,6 @@ const styles = StyleSheet.create({
     marginRight: 5, alignItems: 'center', justifyContent: 'center',
     backgroundColor: Colors.white,
     borderColor: Colors.grey,
-
   },
   checkBoxActive: {
     width: 16, height: 16, borderRadius: 3,
@@ -85,8 +84,6 @@ const styles = StyleSheet.create({
     marginRight: 5, alignItems: 'center', justifyContent: 'center',
     backgroundColor: Colors.blue,
     borderColor: Colors.blue,
-    
-
   },
   checkIcon: {
     color: Colors.white,
@@ -94,7 +91,8 @@ const styles = StyleSheet.create({
   },
 
   loginContainer: {
-    alignItems: 'center', justifyContent: 'center', width: '100%',marginTop:'20%'
+    alignItems: 'center', justifyContent: 'center', width: '100%',marginTop:'10%' ,
+    padding : 20 
   },
  
   input: {

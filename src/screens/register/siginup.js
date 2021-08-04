@@ -12,12 +12,12 @@ import { Icon, Toast as notify } from 'native-base';
 import Colors from '../../utils/colors';
 import auth from '@react-native-firebase/auth'
 import database from '@react-native-firebase/database';
-import storage from '@react-native-firebase/storage';
-const facebook = require('../../assets/images/facebook.png')
-const google = require('../../assets/images/google_plus.png')
+import { SIGNUP , FirstName , LastName , Email ,
+   Phone , ConfirmPassword , Password , UserName  } from '../../utils/constance';
 
+const userImage = require('../../assets/images/logo.png');
 
-const SignUp = ({ toast, isLogin }) => {
+const SignUp = ({ toast, isLogin , navigation }) => {
 
   const ref_firstName = useRef();
   const ref_phoneNumber = useRef();
@@ -28,8 +28,6 @@ const SignUp = ({ toast, isLogin }) => {
   const ref_confirmPass = useRef();
 
   const [loading, isLoading] = useState(false);
-  const [imageUri, setImageUri] = useState('');
-
 
   const [firstName, onChangeFirstName] = useState('');
   const [lastName, onChangeLastName] = useState('');
@@ -68,7 +66,6 @@ const SignUp = ({ toast, isLogin }) => {
     else if (confirmPass == '') { ref_confirmPass.current.focus(); setMessageError("Confirm Password is required") }
     else if (password != confirmPass) { ref_password.current.focus(); setMessageError("Password and Confirm password don't match") }
     else signUp()
-
   }
 
   const signUp = () => {
@@ -78,20 +75,12 @@ const SignUp = ({ toast, isLogin }) => {
       .then((res) => {
         console.log('User account created & signed in!', res);
         database().ref('users/' + res.user.uid).set({ id: res.user.uid, firstName, lastName, email, username, phoneNumber,password })
-        if (imageUri) {
-          const task = storage().ref(res.user.uid).putFile(imageUri)
-          task.on('state_changed', snapshot => {
-            console.log(snapshot);
-            if (snapshot.state == 'success') success()
-            // else { toast.current.show(snapshot.state + ', Upload profile picture.', 3000); isLoading(false) }
-          });
-        }
-        else success()
-
+        success();
+        navigation.navigate('Login');
       })
       .catch(error => {
         console.log(error.code);
-        isLoading(false)
+        isLoading(false);
         toast.current.show(error?.code, 3000)
       });
   }
@@ -115,11 +104,9 @@ const SignUp = ({ toast, isLogin }) => {
     onChangePhoneNumber('')
   }
 
-
-
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      {/* <UploadImage setImageUri={setImageUri} /> */}
+    <Avatar rounded style={styles.avatar} source={userImage} />
       <View style={styles.loginContainer}>
         <View style={styles.errorRow}>
           <Text style={[styles.errorMessage, { height: messageError.includes('First name') ? undefined : 0 }]}>{'* ' + messageError}</Text>
@@ -132,10 +119,9 @@ const SignUp = ({ toast, isLogin }) => {
               ref={ref_firstName}
               style={styles.halfInput}
               onChangeText={onChangeFirstName}
-              placeholder="First Name"
+              placeholder={FirstName}
               onSubmitEditing={() => ref_lastName.current.focus()}
               blurOnSubmit={false}
-
             />
           </View>
 
@@ -145,7 +131,7 @@ const SignUp = ({ toast, isLogin }) => {
               ref={ref_lastName}
               style={styles.halfInput}
               onChangeText={onChangeLastName}
-              placeholder="Last Name"
+              placeholder={LastName}
               onSubmitEditing={() => ref_email.current.focus()}
               blurOnSubmit={false}
             />
@@ -162,7 +148,7 @@ const SignUp = ({ toast, isLogin }) => {
             style={styles.inputPassword}
             onChangeText={onChangeEmail}
             keyboardType={'email-address'}
-            placeholder="Em@il.com"
+            placeholder={Email}
             onSubmitEditing={() => ref_phoneNumber.current.focus()}
             blurOnSubmit={false}
           />
@@ -177,7 +163,7 @@ const SignUp = ({ toast, isLogin }) => {
             keyboardType='phone-pad'
             maxLength={11}
             onChangeText={onChangePhoneNumber}
-            placeholder="Phone Number"
+            placeholder={Phone}
             onSubmitEditing={() => ref_username.current.focus()}
             blurOnSubmit={false}
           />
@@ -190,7 +176,7 @@ const SignUp = ({ toast, isLogin }) => {
             ref={ref_username}
             style={styles.inputPassword}
             onChangeText={onChangeUsername}
-            placeholder="User Name"
+            placeholder={UserName}
             onSubmitEditing={() => ref_password.current.focus()}
             blurOnSubmit={false}
           />
@@ -203,7 +189,7 @@ const SignUp = ({ toast, isLogin }) => {
             ref={ref_password}
             style={styles.inputPassword}
             onChangeText={onChangePassword}
-            placeholder="Password"
+            placeholder={Password}
             secureTextEntry={!show}
             onSubmitEditing={() => ref_confirmPass.current.focus()}
           />
@@ -219,7 +205,7 @@ const SignUp = ({ toast, isLogin }) => {
             ref={ref_confirmPass}
             style={styles.inputPassword}
             onChangeText={onChangeConfirmPass}
-            placeholder="Confirm Password"
+            placeholder={ConfirmPassword}
             secureTextEntry={!showConfirm}
             onSubmitEditing={validation}
           />
@@ -233,25 +219,9 @@ const SignUp = ({ toast, isLogin }) => {
           {loading ? <ActivityIndicator color={Colors.blue} /> :
             <>
               <Icon name='check' type='AntDesign' style={{ color: Colors.blue }} />
-              <Text style={styles.txtBtn} >SIGN-UP</Text>
+              <Text style={styles.txtBtn} >{SIGNUP}</Text>
             </>}
         </TouchableOpacity>
-
-
-        <Text style={styles.lightText} >Sign up with</Text>
-        <View style={styles.simpleRow}>
-          <Avatar
-            onPress={() => { }}
-            style={styles.avatarIcon}
-            source={google}
-          />
-          <Avatar
-            onPress={() => { }}
-            style={styles.avatarIcon}
-            source={facebook}
-          />
-        </View>
-
       </View>
 
       <View style={{ height: 100 }} />

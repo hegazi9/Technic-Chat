@@ -15,7 +15,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import database from '@react-native-firebase/database';
 var Rooms = [];
 
-const Chat = ({route}) => {
+const Chat = ({route , navigation }) => {
   const [loading, setLoading] = useState(false);
   const selectedUser = route.params.selectedUser ;
   const [message , setMessage ] = useState('');
@@ -73,6 +73,11 @@ const Chat = ({route}) => {
     
   }
 
+  const _videoCalling = () => {
+    alert('')
+    navigation.navigate('Agora')
+  }
+
   const taskItem = ({item}) => {
     return <Text>{item}</Text>;
   };
@@ -83,7 +88,7 @@ const Chat = ({route}) => {
       <View style={styles.headerView}>
         <View style={styles.headerNav}>
           <TouchableOpacity>
-            <Text style={styles.txtNav}>Back</Text>
+            <Text onPress = {()=>{navigation.pop()}} style={styles.txtNav}>Back</Text>
           </TouchableOpacity>
 
           <TouchableOpacity>
@@ -97,7 +102,7 @@ const Chat = ({route}) => {
             <TouchableOpacity style={styles.backgroundIconPhone}>
               <Icon name="phone" type="FontAwesome" style={styles.icon} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.backgroundIconVideo}>
+            <TouchableOpacity style={styles.backgroundIconVideo} onPress = {()=> _videoCalling()} >
               <Icon name="video" type="FontAwesome5" style={styles.icon} />
             </TouchableOpacity>
           </View>
@@ -110,7 +115,7 @@ const Chat = ({route}) => {
           <View style={styles.messagesView}>
             <FlatList
               nestedScrollEnabled
-              data={[1, 1]}
+              data={['','']}
               renderItem={taskItem}
               keyExtractor={_keyExtractor}
             />

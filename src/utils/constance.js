@@ -1,0 +1,9 @@
+export const LOGIN = 'LOGIN' ;
+export const SIGNUP = 'SIGN UP' ;
+export const FirstName = 'FirstName' ;
+export const LastName = 'LastName' ;
+export const Email = 'Em@il.com' ;
+export const Phone = 'Phone Number' ;
+export const UserName = 'User Name' ;
+export const ConfirmPassword = 'Confirm Password';
+export const Password = 'Password' ;

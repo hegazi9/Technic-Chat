@@ -4,15 +4,13 @@ import React, {useState, useRef, useEffect} from 'react';
 import {Text, TextInput, View, TouchableOpacity} from 'react-native';
 import styles from './style';
 import {Avatar} from 'react-native-elements';
-import {Icon, Root, Toast as notify} from 'native-base';
+import {Icon, Toast as notify} from 'native-base';
 import Colors from '../../utils/colors';
 import AsyncStorage from '@react-native-community/async-storage';
-import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
+import { Password , UserName, LOGIN  } from '../../utils/constance';
 
 const userImage = require('../../assets/images/logo.png');
-const facebook = require('../../assets/images/facebook.png');
-const google = require('../../assets/images/google_plus.png');
 
 const Login = ({navigation, toast}) => {
   const ref_input1 = useRef();
@@ -49,6 +47,8 @@ const Login = ({navigation, toast}) => {
         : toast.current.show('DB is Empty', 3000);
     }
   };
+
+
   const getUsers = () => {
     let dbRef = database().ref('users');
     dbRef.on('child_added', val => {
@@ -58,20 +58,6 @@ const Login = ({navigation, toast}) => {
       // alert(index)
       index == -1 ? setUsers(users => [...users, user]) : null;
     });
-    // dbRef.on('child_changed', val => {
-    //   let user = val.val()
-    //   console.log('users changed :', user);
-    //   let index = users.findIndex(i => { i.id == user.id })
-    //   alert(index)
-    //   index == -1 ? setUsers(users => [...users, user]) : null;
-    // })
-
-    //   database().ref('users/').on('value', snapshot => {
-    //     snapshot.forEach(c => {
-    //       item = c.val();
-    //       console.log(item)
-    //     })
-    // })
   };
 
   useEffect(() => {
@@ -102,7 +88,7 @@ const Login = ({navigation, toast}) => {
             ref={ref_input1}
             style={styles.inputPassword}
             onChangeText={onChangeUsername}
-            placeholder="Username"
+            placeholder={UserName}
             onSubmitEditing={() => ref_input2.current.focus()}
             blurOnSubmit={false}
           />
@@ -128,7 +114,7 @@ const Login = ({navigation, toast}) => {
             ref={ref_input2}
             style={styles.inputPassword}
             onChangeText={onChangePassword}
-            placeholder="Password"
+            placeholder={Password}
             secureTextEntry={!show}
             onSubmitEditing={loginFun}
           />
@@ -138,14 +124,15 @@ const Login = ({navigation, toast}) => {
             }}
             name={show ? 'eye' : 'eye-off'}
             type="Ionicons"
-            style={{color: Colors.blue, fontSize: 20}}
+            style={styles.icon}
           />
         </View>
 
         <TouchableOpacity style={styles.btn} onPress={loginFun}>
           <Icon name="check" type="AntDesign" style={{color: Colors.blue}} />
-          <Text style={styles.txtBtn}>LOG IN</Text>
+          <Text style={styles.txtBtn}>{LOGIN}</Text>
         </TouchableOpacity>
+        
       </View>
     </View>
   );
